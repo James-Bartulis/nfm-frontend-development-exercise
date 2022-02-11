@@ -6,10 +6,17 @@ export default class Table extends React.Component {
     constructor(props) {
         super(props);
         this.sortAscending = false;
+        this.selected = new Set();
     }
 
     state = {
         projects: projects.projects
+    }
+
+    toggleSelected(project) {
+        if(this.selected.has(project))
+            this.selected.delete(project);
+        else this.selected.add(project);
     }
 
     toggleSortByDate() {
@@ -21,6 +28,12 @@ export default class Table extends React.Component {
             else return new Date(b.postedDate) - new Date(a.postedDate);
         });
         this.setState({projects: sortByDate});
+    }
+
+    submitSelectedProjects() {
+        this.selected.forEach((project) => {
+            console.log(project);
+        });
     }
 
     render() {
@@ -41,8 +54,8 @@ export default class Table extends React.Component {
                     </thead>
                     <tbody>
                     {this.state.projects.map((project)=> (
-                        <tr>
-                            <td><input type="checkbox" /></td>
+                        <tr key={project.name}>
+                            <td><input type="checkbox" onClick={() => {this.toggleSelected(project)}} /></td>
                             <td>{project.name}</td>
                             <td>{project.type}</td>
                             <td>{project.castingDirector}</td>
@@ -52,7 +65,7 @@ export default class Table extends React.Component {
                     </tbody>
                 </table>
                 <div className="SubmitContainer">
-                    <button>Submit</button>
+                    <button onClick={() => {this.submitSelectedProjects()}}>Submit</button>
                 </div>
             </div>
         );
