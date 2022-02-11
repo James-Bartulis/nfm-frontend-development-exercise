@@ -12,16 +12,30 @@ export default class Table extends React.Component {
 
     render() {
         return (
-            <div>
+            <div className="TableContainer">
                 <div>{this.props.tableTitle}</div>
-                {this.state.projects.map((project)=> (
-                    <div>
-                        <div>{project.name}</div>
-                        <div>{project.type}</div>
-                        <div>{project.castingDirector}</div>
-                        <div>{project.postedDate}</div>
-                    </div>
-                ))}
+                <table>
+                    <thead>
+                        <tr>
+                            <td>Name</td>
+                            <td>Type</td>
+                            <td>Casting Director</td>
+                            <td>Posted Date</td>
+                        </tr>
+                    </thead>
+                    <tbody>
+                    {this.state.projects.map((project)=> (
+                        <tr>
+                            <td><input type="checkbox" /></td>
+                            <td>{project.name}</td>
+                            <td>{project.type}</td>
+                            <td>{project.castingDirector}</td>
+                            <td>{project.postedDate}</td>
+                        </tr>
+                    ))}
+                    </tbody>
+                </table>
+                <div className="SubmitContainer"><button>Submit</button></div>
             </div>
         );
     }
