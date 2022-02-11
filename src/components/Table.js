@@ -1,5 +1,6 @@
 import React from "react";
 import projects from '../assets/projects.json';
+import './Table.scss';
 
 export default class Table extends React.Component {
     constructor(props) {
@@ -13,7 +14,9 @@ export default class Table extends React.Component {
     render() {
         return (
             <div className="TableContainer">
-                <div>{this.props.tableTitle}</div>
+                <header>
+                    <div>{this.props.tableTitle.toUpperCase()}</div>
+                </header>
                 <table>
                     <thead>
                         <tr>
@@ -36,7 +39,9 @@ export default class Table extends React.Component {
                     ))}
                     </tbody>
                 </table>
-                <div className="SubmitContainer"><button>Submit</button></div>
+                <div className="SubmitContainer">
+                    <button>Submit</button>
+                </div>
             </div>
         );
     }
