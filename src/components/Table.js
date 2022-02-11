@@ -5,10 +5,22 @@ import './Table.scss';
 export default class Table extends React.Component {
     constructor(props) {
         super(props);
+        this.sortAscending = false;
     }
 
     state = {
         projects: projects.projects
+    }
+
+    toggleSortByDate() {
+        this.sortAscending = !this.sortAscending;
+        let sortByDate = this.state.projects;
+        sortByDate.sort((a, b) => {
+            if(this.sortAscending)
+                return new Date(a.postedDate) - new Date(b.postedDate);
+            else return new Date(b.postedDate) - new Date(a.postedDate);
+        });
+        this.setState({projects: sortByDate});
     }
 
     render() {
@@ -20,11 +32,11 @@ export default class Table extends React.Component {
                 <table>
                     <thead>
                         <tr>
-                            <td></td>
-                            <td>Name</td>
-                            <td>Type</td>
-                            <td>Casting Director</td>
-                            <td>Posted Date</td>
+                            <th></th>
+                            <th>Name</th>
+                            <th>Type</th>
+                            <th>Casting Director</th>
+                            <th onClick={() => {this.toggleSortByDate()}}>Posted Date</th>
                         </tr>
                     </thead>
                     <tbody>
