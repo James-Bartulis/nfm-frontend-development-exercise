@@ -1,6 +1,6 @@
 import React from "react";
 import projects from '../assets/projects.json';
-import './Table.scss';
+import './Table.css';
 
 export default class Table extends React.Component {
     constructor(props) {
@@ -22,15 +22,21 @@ export default class Table extends React.Component {
     toggleSortByDate() {
         this.sortAscending = !this.sortAscending;
         let sortByDate = this.state.projects;
+
         sortByDate.sort((a, b) => {
             if(this.sortAscending)
                 return new Date(a.postedDate) - new Date(b.postedDate);
             else return new Date(b.postedDate) - new Date(a.postedDate);
         });
+        
         this.setState({projects: sortByDate});
     }
 
     submitSelectedProjects() {
+        console.log("Selected: ")
+        if(this.selected.size == 0)
+            console.log("Empty");
+
         this.selected.forEach((project) => {
             console.log(project);
         });
@@ -39,12 +45,12 @@ export default class Table extends React.Component {
     render() {
         return (
             <div className="TableContainer">
-                <header>
+                <header className="Primary">
                     <div>{this.props.tableTitle.toUpperCase()}</div>
                 </header>
                 <table>
                     <thead>
-                        <tr>
+                        <tr className="Secondary">
                             <th></th>
                             <th>Name</th>
                             <th>Type</th>
@@ -54,9 +60,9 @@ export default class Table extends React.Component {
                     </thead>
                     <tbody>
                     {this.state.projects.map((project)=> (
-                        <tr key={project.name}>
+                        <tr className="Primary" key={project.name}>
                             <td><input type="checkbox" onClick={() => {this.toggleSelected(project)}} /></td>
-                            <td>{project.name}</td>
+                            <td>{project.name.toUpperCase()}</td>
                             <td>{project.type}</td>
                             <td>{project.castingDirector}</td>
                             <td>{project.postedDate}</td>
@@ -65,7 +71,7 @@ export default class Table extends React.Component {
                     </tbody>
                 </table>
                 <div className="SubmitContainer">
-                    <button onClick={() => {this.submitSelectedProjects()}}>Submit</button>
+                    <button className="Secondary" onClick={() => {this.submitSelectedProjects()}}>SUBMIT</button>
                 </div>
             </div>
         );
